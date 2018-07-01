@@ -37,12 +37,12 @@
             initDatabase();
             
 			$('#export').click(function(){
-			alert(1111);
                 var db = getCurrentDb();
 				var dataSale =[];
 				db.transaction(function (trans) {
 					trans.executeSql("select * from sale ", [], function (ts, data) {
 						if (data) {
+						alert(console.log(data));
 							var title=[{name:'产品名称'},{num:'数量'}]; 
 							toExcel("Report", data.rows, title);
 						}
@@ -52,7 +52,6 @@
 			
 			//清空数据库
 			$('#clear').click(function(){  
-			alert(123456);
                 var db = getCurrentDb();
 				var dataSale =[];
 				db.transaction(function (trans) {
