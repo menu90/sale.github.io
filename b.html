@@ -36,7 +36,8 @@
 		$(function () {//页面加载完成后绑定页面按钮的点击事件
             initDatabase();
             
-			$('#export').click(function(){  
+			$('#export').click(function(){
+			alert(1111);
                 var db = getCurrentDb();
 				var dataSale =[];
 				db.transaction(function (trans) {
