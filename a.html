@@ -13,7 +13,8 @@ var COOKIE_NAME = 'sales'; 
 $(function(){
 		
 		if($.cookie(COOKIE_NAME)){
-			sales = $.cookie(COOKIE_NAME);
+			var str = $.cookie(COOKIE_NAME);
+			var sales = JSON.parse(str);
 			console.log(sales);
 			
 		}
@@ -27,8 +28,10 @@ $(function(){
 			    sales.push(obj) ;
 				var date = new Date();  
 				console.log(sales);
+				    var str = JSON.stringify(sales);
+
      			date.setTime(date.getTime() + (3 * 24 * 60 * 60 * 1000)); //三天后的这个时候过期  
-				$.cookie(COOKIE_NAME, sales , { path: '/', expires: date });  
+				$.cookie(COOKIE_NAME, str , { path: '/', expires: date });  
 				alert("ok");
 			  }
 	      function del(a){
