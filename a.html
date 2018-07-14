@@ -8,17 +8,6 @@
 	<script src="./jquery.cookie.js"></script>
 <script  type="text/javascript">  
 
- 
- $("#check").click(function(){  
-   if(this.checked){  
-     
-     //var date = new Date();  
-     //date.setTime(date.getTime() + (3 * 24 * 60 * 60 * 1000)); //三天后的这个时候过期  
-     //$.cookie(COOKIE_NAME, $("#username").val(), { path: '/', expires: date });  
-   }else{  
-     $.cookie(COOKIE_NAME, null, { path: '/' }); //删除cookie  
-   }  
- });
 var COOKIE_NAME = 'sales';  
 		var sales=[];
 $(function(){
@@ -31,7 +20,7 @@ $(function(){
 });
 		
 		  function add(){
-			    sales.push({"name":"项","password":"vv6"}) ;
+			    sales.push(jQuery.parseJSON('{"PID":蔡丹 ,"Cnt":111}')) ;
 				var date = new Date();  
 				console.log(sales);
      			date.setTime(date.getTime() + (3 * 24 * 60 * 60 * 1000)); //三天后的这个时候过期  
