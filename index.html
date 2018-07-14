@@ -128,6 +128,7 @@
 				alert('没有销售数据');
 				return ;
 			}
+			alert(str);
 			var arrData = typeof str != 'object' ? JSON.parse(str) : str;  
 			var excel = '<table>';      
 			var title=[{name:'产品名称'},{num:'数量'}]; 
