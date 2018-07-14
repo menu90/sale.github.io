@@ -125,7 +125,7 @@
 		function exportExcl(){
 			var str = $.cookie(COOKIE_NAME);
 			if(str != null){
-				sales = JSON.parse(str);
+				arrData = JSON.parse(str);
 			}else{
 				alert("没有销售数据！");
 			}
