@@ -44,6 +44,7 @@
 						if (data) {
 						alert(console.log(data));
 							var title=[{name:'产品名称'},{num:'数量'}]; 
+							console.log(data.rows);
 							toExcel("Report", data.rows, title);
 						}
 					}, function (ts, message) {alert(message);var tst = message;});
