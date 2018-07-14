@@ -124,11 +124,11 @@
 		}
 		function exportExcl(){
 			var str = $.cookie(COOKIE_NAME);
-			if(str != null){
-				arrData = JSON.parse(str);
-			}else{
-				alert("没有销售数据！");
+			if(str == undefined){
+				alert('没有销售数据');
+				return ;
 			}
+			var arrData = typeof str != 'object' ? JSON.parse(str) : str;  
 			var excel = '<table>';      
 			var title=[{name:'产品名称'},{num:'数量'}]; 
 			//设置表头  
