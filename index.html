@@ -15,106 +15,49 @@
     <!-- Custom Fonts -->
     <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+	<style type="text/css">
+            
+
+            .btn-my { 
+                 /*background: #cb60b3; Old browsers */ 
+                /*background: -moz-linear-gradient(top, #cb60b3 0%, #ad1283 50%, #de47ac 100%); FF3.6+ */ 
+                /* background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #cb60b3),color-stop(50%, #ad1283), color-stop(100%, #de47ac) ); Chrome,Safari4+ */ 
+                /* background : -webkit-linear-gradient( top, #cb60b3 0%,#ad1283 50%, #de47ac 100%);  Chrome10+,Safari5.1+ */ 
+                /* background: -o-linear-gradient(top, #cb60b3 0%, #ad1283 50%, #de47ac 100%);Opera 11.10+ */ 
+                /* background: -ms-linear-gradient(top, #cb60b3 0%, #ad1283 50%, #de47ac 100%); IE10+ */ 
+                /* background: linear-gradient(to bottom, #cb60b3 0%, #ad1283 50%, #de47ac 100%); W3C */ 
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#cb60b3",endColorstr="#de47ac", GradientType=0 ); /* IE6-9 */ }
+            .btn-my{ width: 25px; height: 25px; 
+					-moz-border-radius: 50%; 
+					-webkit-border-radius: 50%;
+					border-radius: 50%;
+					padding:0px 2px 0 0;
+					font-size:large;
+					font-weight:bold;
+					}
+            .active{
+                background: forestgreen;
+                color:#F8F8F8;
+            }
+
+         </style>
+	
     <script type="text/javascript" src="./jquery-1.8.2.min.js"></script>
 	<!--<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>-->
     <script type="text/javascript"> 
-		function initDatabase() {
-            var db = getCurrentDb();//初始化数据库
-            if(!db) {alert("您的浏览器不支持HTML5本地数据库");return;}
-            db.transaction(function (trans) {//启动一个事务，并设置回调函数
-                //执行创建表的Sql脚本
-                trans.executeSql("create table if not exists Sale(name text null,num text null)",
-				[], function (trans, result) {
-                }, function (trans, message) {//消息的回调函数
-					alert(message);
-					}
-				);
-            }, function (trans, result) {
-            }, function (trans, message) {
-            });
-        }	
-		$(function () {//页面加载完成后绑定页面按钮的点击事件
-            initDatabase();
-            
-			$('#export').click(function(){
-                var db = getCurrentDb();
-				var dataSale =[];
-				db.transaction(function (trans) {
-					trans.executeSql("select * from sale ", [], function (ts, data) {
-						if (data) {
-						alert(console.log(data));
-							var title=[{name:'产品名称'},{num:'数量'}]; 
-							toExcel("Report", data.rows, title);
-						}
-					}, function (ts, message) {alert(message);var tst = message;});
-				});
-			});  
-			
-			//清空数据库
-			$('#clear').click(function(){  
-                var db = getCurrentDb();
-				var dataSale =[];
-				db.transaction(function (trans) {
-					trans.executeSql("delete from sale ", [], function (ts, data) {
-						alert("数据清空成功！");
-					}, function (ts, message) {alert(message);var tst = message;});
-				});
-            });  
-			
-			//出售
-			$('#sales').click(function(){
-				var flag = true;
-				var tabObj = $('#saleTab');
-				var trObj = tabObj.find('tr');
-				var db = getCurrentDb();
-				var sql = "insert into Sale(name,num) values";
-				for(var i=1;i<trObj.length;i++){
-					var num = $('#num'+i).val();
-					if(num > 0){
-						flag = false;
-						var name = $('#name'+i).text();
-						//console.log('num:'+num +",name:"+name);
-						//执行sql脚本，插入数据
-						sql += "('" + name + "'," + num + "),"
-						
-					}
-				}
-				if(flag){
-					alert('请输入购买数量');
-					return;
-				}
-				sql = sql.substring(0, sql.length-1);
-				db.transaction(function (trans) {
-							trans.executeSql(sql, [], function (ts, data) {
-							}, function (ts, message) {
-								alert(message);
-							});
-						});
-				//console.log(sql);
-				for(var i=1;i<trObj.length;i++){
-					$('#num'+i).val('');
-				}
-				
-			})
-        });
-        function getCurrentDb() {
-            //打开数据库，或者直接连接数据库参数：数据库名称，版本，概述，大小
-            //如果数据库不存在那么创建之
-            var db = openDatabase("myDb", "1.0", "it's to save sale data!", 1024 * 1024); ;
-            return db;
-        }
+		/*
         //FileName 生成的Excel文件名称
         function toExcel(FileName, JSONData, ShowLabel) {  
             //先转化json  
-            var arrData = typeof JSONData != 'object' ? JSON.parse(JSONData) : JSONData;  
+            var arrData = typeof JSONData != "object" ? JSON.parse(JSONData) : JSONData;  
               
-            var excel = '<table>';      
+            var excel = "<table>";      
               
             //设置表头  
-            var row = "<tr align='left'>";//设置Excel的左居中
+            var row = "<tr align="left">";//设置Excel的左居中
             for (var i = 0, l = ShowLabel.length; i < l; i++) {  
                 for (var key in ShowLabel[i]) {
-                    row += "<td>" + ShowLabel[i][key] + '</td>';  
+                    row += "<td>" + ShowLabel[i][key] + "</td>";  
                 }
             }  
               
@@ -124,12 +67,12 @@
               
             //设置数据  
             for (var i = 0; i < arrData.length; i++) {  
-                var rowData = "<tr align='left'>"; 
+                var rowData = "<tr align="left">"; 
 
                 for (var y = 0; y < ShowLabel.length; y++) {
                     for(var k in ShowLabel[y]){
                         if (ShowLabel[y].hasOwnProperty(k)) {
-                             rowData += "<td style='vnd.ms-excel.numberformat:@'>" + (arrData[i][k]===null? "" : arrData[i][k]) + "</td>";
+                             rowData += "<td style="vnd.ms-excel.numberformat:@">" + (arrData[i][k]===null? "" : arrData[i][k]) + "</td>";
 　　　　　　　　　　　　　　　　　 //vnd.ms-excel.numberformat:@ 输出为文本
                         }
                     }
@@ -140,10 +83,10 @@
   
             excel += "</table>";  
   
-            var excelFile = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:x='urn:schemas-microsoft-com:office:excel' xmlns='http://www.w3.org/TR/REC-html40'>";  
-            excelFile += '<meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8">';  
-            excelFile += '<meta http-equiv="content-type" content="application/vnd.ms-excel';  
-            excelFile += '; charset=UTF-8">';  
+            var excelFile = "<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">";  
+            excelFile += "<meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8">";  
+            excelFile += "<meta http-equiv="content-type" content="application/vnd.ms-excel";  
+            excelFile += "; charset=UTF-8">";  
             excelFile += "<head>";  
             excelFile += "<!--[if gte mso 9]>";  
             excelFile += "<xml>";  
@@ -168,7 +111,7 @@
             excelFile += "</html>";  
   
               
-            var uri = 'data:application/vnd.ms-excel;charset=utf-8,' + encodeURIComponent(excelFile);  
+            var uri = "data:application/vnd.ms-excel;charset=utf-8," + encodeURIComponent(excelFile);  
               
             var link = document.createElement("a");      
             link.href = uri;  
@@ -179,9 +122,71 @@
             document.body.appendChild(link);  
             link.click();  
             document.body.removeChild(link);  
-        }  
+        } */ 
 		function addMenu(val){
-		alert(val);
+			var name;
+			var unit = 0;
+			switch(val){
+				case 0:
+				  name = "城管追原味";
+				  unit = 10;
+				  break;
+				case 1:
+				  name = "来一腿鸡腿";
+				  unit = 13;
+				  break;
+				case 2:
+				  name = "食肉兽卤肉";
+				  unit = 15;
+				  break;
+				case 3:
+				  name = "无肉不欢卤肉+鸡腿";
+				  unit = 15;
+				  break;
+				  case 4:
+				  name = "清凉一夏奥尔良鸡腿";
+				  unit = 15;
+				  break;
+				case 5:
+				  name = "海之味吞拿鱼";
+				  unit = 13;
+				  break;
+				case 6:
+				  name = "鸡蛋";
+				  unit = 1;
+				  break;
+				  case 7:
+				  name = "辣条";
+				  unit = 1;
+				  break;
+				case 8:
+				  name = "肉松";
+				  unit = 3;
+				  break;
+				case 9:
+				  name = "火腿";
+				  unit = 3;
+				  break;
+				default:
+				  alert("新产品待研发，敬请期待！");
+				}
+				var str = '<tr id="li'+val+'" >'+
+							'<td style="width:80px;">'+name+
+							'</td><td style="width:70px;"><input type="button" class="btn btn-my btn-default"  onclick=addOrSub('+val+',0) value="-"/>'+
+							'<span id="num'+val+'" style="font-size:12px;font-weight:bold;">1</span>'+
+							'<span id="unit'+val+'" style="display:none">'+unit+'</span>'+
+							'<input type="button" class="btn btn-my btn-info" onclick=addOrSub('+val+',1) value="+"/>'+
+							'</td></tr>';
+					
+				var total = $("#total").text();//总数
+				var money = $("#money").text();//总价
+				total = parseInt(total) +1;
+				money = parseInt(money)+parseInt(unit);
+				$("#addli").append(str);
+				
+				$("#total").text(total);
+				$("#money").text(money);
+				
 		}
 		function exportExcl(){
 		alert("export");
@@ -189,34 +194,74 @@
 		function sale(){
 			alert("sale");
 		}
+		function addOrSub(val, flag){
+			var total = $("#total").text();//总数
+			var money = $("#money").text();//总价
+			var num = $("#num"+val).text();
+			var unit = $("#unit" + val).text();
+			if(flag == 1){
+				total = parseInt(total) +1;
+				money = parseInt(money)+parseInt(unit);
+				num = parseInt(num)+1;
+			}else{
+				total = parseInt(total) -1;
+				money = parseInt(money)-parseInt(unit);
+				num = parseInt(num)-1;
+				if(num == 0){
+					$("#li"+val).remove();
+				}
+			}
+			
+			
+			$("#num"+val).text(num);
+			$("#total").text(total);
+			$("#money").text(money);
+		}
     </script>  
 
 	
 </head>  
 <body> 
 	<div class="container">
-		<img data-title="代码生成来源Banner设计欣赏网站" width="566" height="800" src="https://menu90.github.io/sale.github.io/1071256544.jpg"  usemap="#859375" />
-		<map name="859375" id="Map">
-			<area style="outline:none;" target="_blank" shape="rect" coords="181,128,300,200" href="javascript:void(0)" onclick="addMenu(0)"  />
-			<area style="outline:none;" target="_blank" shape="rect" coords="308,128,427,200" href="javascript:void(0)" onclick="addMenu(1)" />
-			<area style="outline:none;" target="_blank" shape="rect" coords="437,128,554,200" href="javascript:void(0)" onclick="addMenu(2)" />
+		<div class="row">
+			<div class="col-sm-12 text-center">
+				<img width="566" height="800" src="https://menu90.github.io/sale.github.io/1071256544.jpg"  usemap="#859375" />
+				<map name="859375" id="Map">
+					<area style="outline:none;" target="_blank" shape="rect" coords="181,128,300,200" href="javascript:void(0)" onclick="addMenu(0)"  />
+					<area style="outline:none;" target="_blank" shape="rect" coords="308,128,427,200" href="javascript:void(0)" onclick="addMenu(1)" />
+					<area style="outline:none;" target="_blank" shape="rect" coords="437,128,554,200" href="javascript:void(0)" onclick="addMenu(2)" />
+					
+					<area style="outline:none;" target="_blank" shape="rect" coords="181,220,300,292" href="javascript:void(0)" onclick="addMenu(3)" />
+					<area style="outline:none;" target="_blank" shape="rect" coords="308,220,427,292" href="javascript:void(0)" onclick="addMenu(4)"  />
+					<area style="outline:none;" target="_blank" shape="rect" coords="437,220,554,292" href="javascript:void(0)" onclick="addMenu(5)"  />
+					
+					<area style="outline:none;" target="_blank" shape="rect" coords="181,365,300,442" href="javascript:void(0)" onclick="addMenu(6)" />
+					<area style="outline:none;" target="_blank" shape="rect" coords="308,365,427,442" href="javascript:void(0)" onclick="addMenu(7)"  />
+					<area style="outline:none;" target="_blank" shape="rect" coords="437,365,554,442" href="javascript:void(0)" onclick="addMenu(8)"  />
+					
+					<area style="outline:none;" target="_blank" shape="rect" coords="181,460,300,532" href="javascript:void(0)" onclick="addMenu(9)"  />
+					<area style="outline:none;" target="_blank" shape="rect" coords="308,460,427,532" href="javascript:void(0)" onclick="addMenu(10)"  />
+					<area style="outline:none;" target="_blank" shape="rect" coords="437,460,554,532" href="javascript:void(0)" onclick="addMenu(10)"  />
+					
+					<area style="outline:none;" target="_blank" shape="rect" coords="0,755,60,785" href="javascript:void(0)" onclick="exportExcl()"  />
+					<area style="outline:none;" target="_blank" shape="rect" coords="100,755,160,785" href="javascript:void(0)" onclick="sale()"  />
+
+				</map>
+				<div style="margin-left:8%;margin-top:-98%;width:28%;height:665px;" class="col-sm-5">
+					<table class="table text-left" id="addli">
+					
+					</table>
+					
+					
+				</div>
+				<div style="width:160px;margin-left:8%;margin-top:-80px;" class="col-sm-5">
+					<span class="text-left" style="width:70px;">共<span id="total">0</span>份</span>
+					<span class="text-right">合计￥<span id="money">0</span></span>
+						
+					</div>
+			</div>
 			
-			<area style="outline:none;" target="_blank" shape="rect" coords="181,220,300,292" href="javascript:void(0)" onclick="addMenu(3)" />
-			<area style="outline:none;" target="_blank" shape="rect" coords="308,220,427,292" href="javascript:void(0)" onclick="addMenu(4)"  />
-			<area style="outline:none;" target="_blank" shape="rect" coords="437,220,554,292" href="javascript:void(0)" onclick="addMenu(5)"  />
-			
-			<area style="outline:none;" target="_blank" shape="rect" coords="181,365,300,442" href="javascript:void(0)" onclick="addMenu(6)" />
-			<area style="outline:none;" target="_blank" shape="rect" coords="308,365,427,442" href="javascript:void(0)" onclick="addMenu(7)"  />
-			<area style="outline:none;" target="_blank" shape="rect" coords="437,365,554,442" href="javascript:void(0)" onclick="addMenu(8)"  />
-			
-			<area style="outline:none;" target="_blank" shape="rect" coords="181,460,300,532" href="javascript:void(0)" onclick="addMenu(9)"  />
-			<area style="outline:none;" target="_blank" shape="rect" coords="308,460,427,532" href="javascript:void(0)" onclick="addMenu(10)"  />
-			<area style="outline:none;" target="_blank" shape="rect" coords="437,460,554,532" href="javascript:void(0)" onclick="addMenu(10)"  />
-			
-			<area style="outline:none;" target="_blank" shape="rect" coords="0,755,60,785" href="javascript:void(0)" onclick="exportExcl()"  />
-			<area style="outline:none;" target="_blank" shape="rect" coords="100,755,160,785" href="javascript:void(0)" onclick="sale()"  />
-	
-		</map>
+		</div>
 	</div>
 </body>  
 </html>
