@@ -43,7 +43,7 @@
 					trans.executeSql("select * from sale ", [], function (ts, data) {
 						if (data) {
 						alert(console.log(data));
-							var title=[{name:'产品名称'},{num:'数量'}]; 
+							
 							console.log(data.rows);
 							toExcel("Report", data.rows, title);
 						}

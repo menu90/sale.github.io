@@ -46,14 +46,12 @@
 	<script src="./jquery.cookie.js"></script>
 	<!--<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>-->
     <script type="text/javascript"> 
-		var COOKIE_NAME = 'sales';  
-		var sales=[];
 		$(function(){
-			if($.cookie(COOKIE_NAME)){
-				var str = $.cookie(COOKIE_NAME);
-				if(str != null){
-					sales = JSON.parse(str);
-				}
+			if($.cookie('name_str')){
+				
+				$.cookie('name_str', "城管追原味,来一腿鸡腿,食肉兽卤肉,无肉不欢卤肉+鸡腿,清凉一夏奥尔良鸡腿"+
+					",海之味吞拿鱼,鸡蛋,辣条,肉松,火腿");
+				$.cookie('sale_str', '0|0|0|0|0|0|0|0|0|0');
 			}
 		});
 		
@@ -104,7 +102,7 @@
 				default:
 				  alert("新产品待研发，敬请期待！");
 				}
-				var str = '<tr id="li'+val+'" >'+
+				var str = '<tr id="li_'+val+'" >'+
 							'<td style="width:80px;">'+name+
 							'</td><td style="width:70px;"><input type="button" class="btn btn-my btn-default"  onclick=addOrSub('+val+',0) value="-"/>'+
 							'<span id="num'+val+'" style="font-size:12px;font-weight:bold;">1</span>'+
@@ -123,103 +121,36 @@
 				
 		}
 		function exportExcl(){
-			var str = $.cookie(COOKIE_NAME);
-			if(str == undefined){
-				alert('没有销售数据');
-				return ;
-			}
-			alert(str);
-			var arrData = typeof str != 'object' ? JSON.parse(str) : str;  
-			var excel = '<table>';      
-			var title=[{name:'产品名称'},{num:'数量'}]; 
-			//设置表头  
-            var row = '<tr align="left">';//设置Excel的左居中
-            for (var i = 0, l = title.length; i < l; i++) {  
-                for (var key in title[i]) {
-                    row += '<td>' + title[i][key] + '</td>';  
-                }
-            }  
-              
-              
-            //换行  
-            excel += row + '</tr>';  
-              
-            //设置数据  
-            for (var i = 0; i < arrData.length; i++) {  
-                var rowData = '<tr align="left">'; 
-
-                for (var y = 0; y < title.length; y++) {
-                    for(var k in title[y]){
-                        if (title[y].hasOwnProperty(k)) {
-                             rowData += '<td style="vnd.ms-excel.numberformat:@">' + (arrData[i][k]===null? "" : arrData[i][k]) + '</td>';
-　　　　　　　　　　　　　　　　　 //vnd.ms-excel.numberformat:@ 输出为文本
-                        }
-                    }
-                }
-
-                excel += rowData + '</tr>';  
-            }  
-  
-            excel += '</table>';  
-  
-            var excelFile = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">';  
-            excelFile += '<meta http-equiv="content-type" content="application/vnd.ms-excel; charset=UTF-8">';  
-            excelFile += '<meta http-equiv="content-type" content="application/vnd.ms-excel';  
-            excelFile += '; charset=UTF-8">';  
-            excelFile += '<head>';  
-            excelFile += '<!--[if gte mso 9]>';  
-            excelFile += '<xml>';  
-            excelFile += '<x:ExcelWorkbook>';  
-            excelFile += '<x:ExcelWorksheets>';  
-            excelFile += '<x:ExcelWorksheet>';  
-            excelFile += '<x:Name>';  
-            excelFile += '{worksheet}';  
-            excelFile += '</x:Name>';  
-            excelFile += '<x:WorksheetOptions>';  
-            excelFile += '<x:DisplayGridlines/>';  
-            excelFile += '</x:WorksheetOptions>';  
-            excelFile += '</x:ExcelWorksheet>';  
-            excelFile += '</x:ExcelWorksheets>';  
-            excelFile += '</x:ExcelWorkbook>';  
-            excelFile += '</xml>';  
-            excelFile += '<![endif]-->';  
-            excelFile += '</head>';  
-            excelFile += '<body>';  
-            excelFile += excel;  
-            excelFile += '</body>';  
-            excelFile += '</html>';  
-  
-              
-            var uri = "data:application/vnd.ms-excel;charset=utf-8," + encodeURIComponent(excelFile);  
-              
-            var link = document.createElement("a");      
-            link.href = uri;  
-              
-            link.style = "visibility:hidden";  
-            link.download =  "销售统计.xls";  
-              
-            document.body.appendChild(link);  
-            link.click();  
-            document.body.removeChild(link);  
+			
+		
 		}
 		function sale(){
+			
 			var trObj = $('#addli').find('tr');
 			//console.log(trObj);
+			var sale_str = $.cookie('sale_str');
+			//sale_str = '0|0|0|0|0|0|0|0|0|0';
+			var sale_arr = sale_str.split('|');
 			trObj.each(function(){
 				var name = $(this).find('td').eq(0).html();
 
 				var num = $(this).find('td span').eq(0).html();
-				var saleJson = {
-					'name':name,
-					'num':num
-				}
-				sales.push(saleJson) ;
-			});			    
+				var id = $(this).attr('id');
+				var id_arr = id.split('_');
+				console.log(id);
+				var pre = sale_arr[id_arr[1]];
+				var now = parseInt(pre) + parseInt(num);
+				alert(now);
+				sale_arr[id_arr[1]] = now;
+				
+			});			   
+			sale_str = sale_arr.join("|");  
+			sale_str = sale_str.substring(0, sale_str.length-1);    
+			
 			var date = new Date();  
-			var str = JSON.stringify(sales);
-
      		date.setTime(date.getTime() + (3 * 24 * 60 * 60 * 1000)); //三天后的这个时候过期  
-			$.cookie(COOKIE_NAME, str , { path: '/', expires: date });  
+			$.cookie('sale_str', sale_str , { path: '/', expires: date });  
+			trObj.remove();
 			  
 		}
 		function addOrSub(val, flag){
@@ -253,7 +184,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 text-center">
-				<img width="566" height="800" src="https://menu90.github.io/sale.github.io/1071256544.jpg"  usemap="#859375" />
+				<img width="566" height="800" src="./1071256544.jpg"  usemap="#859375" />
 				<map name="859375" id="Map">
 					<area style="outline:none;" target="_blank" shape="rect" coords="181,128,300,200" href="javascript:void(0)" onclick="addMenu(0)"  />
 					<area style="outline:none;" target="_blank" shape="rect" coords="308,128,427,200" href="javascript:void(0)" onclick="addMenu(1)" />
@@ -271,18 +202,19 @@
 					<area style="outline:none;" target="_blank" shape="rect" coords="308,460,427,532" href="javascript:void(0)" onclick="addMenu(10)"  />
 					<area style="outline:none;" target="_blank" shape="rect" coords="437,460,554,532" href="javascript:void(0)" onclick="addMenu(10)"  />
 					
-					<area style="outline:none;" target="_blank" shape="rect" coords="0,755,60,785" href="javascript:void(0)" onclick="exportExcl()"  />
+					<area style="outline:none;" target="_blank" shape="rect" coords="0,755,60,785" href="./img.html"/>
 					<area style="outline:none;" target="_blank" shape="rect" coords="100,755,160,785" href="javascript:void(0)" onclick="sale()"  />
 
 				</map>
-				<div style="margin-left:8%;margin-top:-98%;width:28%;height:665px;" class="col-sm-5">
+				<div style="width:200px;height:600px;margin-left:55px;margin-top:-680px;" class="col-sm-5">
+				
 					<table class="table text-left" id="addli">
 					
 					</table>
 					
 					
 				</div>
-				<div style="width:160px;margin-left:8%;margin-top:-80px;" class="col-sm-5">
+				<div style="width:200px;margin-left:55px;margin-top:-70px;" class="col-sm-5">
 					<span class="text-left" style="width:70px;">共<span id="total">0</span>份</span>
 					<span class="text-right">合计￥<span id="money">0</span></span>
 						

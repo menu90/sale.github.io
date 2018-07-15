@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html >
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="menu">
+	<title>煎饼销量统计</title>
+	<!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<!--<link href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">-->
+
+
+    <!-- Custom Fonts -->
+    <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="./jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="./jqplot.js"></script>
+	<script src="./jquery.cookie.js"></script>
+
+
+
+</head>
+<body>
+
+	<div id="chart2"></div>
+
+	<script type="text/javascript">
+	var sale_str = $.cookie('sale_str');
+	var sale_name = $.cookie('name_str');
+	sale_name = "城管追原味,来一腿鸡腿,食肉兽卤肉,无肉不欢卤肉+鸡腿,清凉一夏奥尔良鸡腿"+
+					",海之味吞拿鱼,鸡蛋,辣条,肉松,火腿";
+	var sale_name_arr = sale_name.split(',');
+	sale_str = '0|0|4|0|0|0|0|0|0|0';
+	var sale_arr = sale_str.split('|');
+	var data_max = sale_arr.sort(function(a,b){
+		return b-a;
+	})[0];
+	sale_arr = sale_str.split('|');
+	var data = [sale_arr];
+	//var data = [[1,2,3,4,5,6,7,8,9]];
+	
+	var line_title = ["产品销售走势"]; //曲线名称
+	var y_label = "销售量"; //Y轴标题
+	var x_label = "产品名称"; //X轴标题
+	var x = sale_name_arr; //定义X轴刻度值
+	j.jqplot.diagram.base("chart2", data, line_title, "煎饼销量统计", x, x_label, y_label, data_max, 2);
+
+</script>
+</body>
+</html>
+
