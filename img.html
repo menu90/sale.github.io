@@ -32,6 +32,7 @@
 					",海之味吞拿鱼,鸡蛋,辣条,肉松,火腿";
 	var sale_name_arr = sale_name.split(',');
 	var sale_arr = sale_str.split('|');
+	console.log(sale_arr);
 	var data_max = sale_arr.sort(function(a,b){
 		return parseInt(b)-parseInt(a);
 	})[0];
