@@ -53,6 +53,21 @@
 					",海之味吞拿鱼,鸡蛋,辣条,肉松,火腿");
 				$.cookie('sale_str', '0|0|0|0|0|0|0|0|0|0');
 			}
+			
+			var width = $("#img1").width();//获取当前图片宽度
+			var bili = width / 566;//计算图片比例，750原图宽度
+			var height = $("#img1").height();//获取图片高度
+			var bili2 = height / 800;//计算高度比，5336原图高度
+			$("area").each(function (i) {//遍历area标签
+              
+                var coords = $(this).attr('coords');//获取坐标值
+               
+               var coordsArr = coords.split(',');//切分为数组
+            var newCoordsArr = new Array(coordsArr[0] *         bili,coordsArr[1]*bili2,coordsArr[2]*bili,coordsArr[3]*bili2);//计算新坐标值
+
+         var newCoords = newCoordsArr.join(',');//数组转字符串
+          $(this).attr('coords',newCoords);//设置新的坐标值
+       });
 		});
 		
 		function addMenu(val){
@@ -101,6 +116,7 @@
 				  break;
 				default:
 				  alert("新产品待研发，敬请期待！");
+				  return ;
 				}
 				var str = '<tr id="li_'+val+'" >'+
 							'<td style="width:80px;">'+name+
@@ -177,14 +193,18 @@
 			$("#money").text(money);
 		}
     </script>  
+	
+<style>
+	img { height: auto; width: auto\9; width:100%; }
 
+</style>
 	
 </head>  
 <body> 
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 text-center">
-				<img width="566" height="800" src="./1071256544.jpg"  usemap="#859375" />
+				<img  src="./1071256544.jpg"  usemap="#859375" id="img1"/>
 				<map name="859375" id="Map">
 					<area style="outline:none;" target="_blank" shape="rect" coords="181,128,300,200" href="javascript:void(0)" onclick="addMenu(0)"  />
 					<area style="outline:none;" target="_blank" shape="rect" coords="308,128,427,200" href="javascript:void(0)" onclick="addMenu(1)" />
@@ -206,7 +226,7 @@
 					<area style="outline:none;" target="_blank" shape="rect" coords="100,755,160,785" href="javascript:void(0)" onclick="sale()"  />
 
 				</map>
-				<div style="width:200px;height:600px;margin-left:55px;margin-top:-680px;" class="col-sm-5">
+				<div style="width:30%;height:700px;margin-top:-120%;" class="col-sm-5">
 				
 					<table class="table text-left" id="addli">
 					
@@ -214,7 +234,7 @@
 					
 					
 				</div>
-				<div style="width:200px;margin-left:55px;margin-top:-70px;" class="col-sm-5">
+				<div style="width:30%;margin-top:-13%;" class="col-sm-5">
 					<span class="text-left" style="width:70px;">共<span id="total">0</span>份</span>
 					<span class="text-right">合计￥<span id="money">0</span></span>
 						
