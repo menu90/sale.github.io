@@ -168,6 +168,8 @@
 
 			$.cookie('sale_str', sale_str , { expires: date });  
 			trObj.remove();
+			var total = $("#total").text(0);//总数
+			var money = $("#money").text(0);//总价
 			  
 		}
 		function addOrSub(val, flag){
