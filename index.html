@@ -154,14 +154,13 @@
 				var num = $(this).find('td span').eq(0).html();
 				var id = $(this).attr('id');
 				var id_arr = id.split('_');
-				console.log(id);
 				var pre = sale_arr[id_arr[1]];
 				var now = parseInt(pre) + parseInt(num);
 				sale_arr[id_arr[1]] = now;
 				
 			});			   
 			sale_str = sale_arr.join("|");  
-			sale_str = sale_str.substring(0, sale_str.length-1);    
+			//sale_str = sale_str.substring(0, sale_str.length-1);    
 			
 			var date = new Date();  
      		date.setTime(date.getTime() + (3 * 24 * 60 * 60 * 1000)); //三天后的这个时候过期  
