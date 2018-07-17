@@ -165,9 +165,9 @@
 			
 			var date = new Date();  
      		date.setTime(date.getTime() + (3 * 24 * 60 * 60 * 1000)); //三天后的这个时候过期  
-			$.cookie('cookieId',null,{expires:-1,path: '/'});
+			//$.cookie('cookieId',null,{expires:-1,path: '/'});
 
-			$.cookie('sale_str', sale_str , { path: '/', expires: date });  
+			$.cookie('sale_str', sale_str , { expires: date });  
 			trObj.remove();
 			  
 		}
