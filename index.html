@@ -53,21 +53,22 @@
 					",海之味吞拿鱼,鸡蛋,辣条,肉松,火腿");
 				$.cookie('sale_str', '0|0|0|0|0|0|0|0|0|0');
 			}
+			 $("#img1").load(function(){
+				var width = $("#img1").width();//获取当前图片宽度
+				var wbili = width / 566;//计算图片比例，750原图宽度
+				var height = $("#img1").height();//获取图片高度
+				var hbili = height / 800;//计算高度比，5336原图高度
+				console.log(wbili + ":" + hbili + ":" + height +":" + width);
+				$("area").each(function (i) {//遍历area标签
+					var coords = $(this).attr('coords');//获取坐标值
+					var coordsArr = coords.split(',');//切分为数组
+					var newCoordsArr = new Array(coordsArr[0] *wbili,coordsArr[1]*hbili,coordsArr[2]*wbili,coordsArr[3]*hbili);//计算新坐标值
+					console.log(newCoordsArr);
+					var newCoords = newCoordsArr.join(',');//数组转字符串
+					$(this).attr('coords',newCoords);//设置新的坐标值
+				});
+			});
 			
-			var width = $("#img1").width();//获取当前图片宽度
-			var bili = width / 566;//计算图片比例，750原图宽度
-			var height = $("#img1").height();//获取图片高度
-			var bili2 = height / 800;//计算高度比，5336原图高度
-			$("area").each(function (i) {//遍历area标签
-              
-                var coords = $(this).attr('coords');//获取坐标值
-               
-               var coordsArr = coords.split(',');//切分为数组
-            var newCoordsArr = new Array(coordsArr[0] *         bili,coordsArr[1]*bili2,coordsArr[2]*bili,coordsArr[3]*bili2);//计算新坐标值
-
-         var newCoords = newCoordsArr.join(',');//数组转字符串
-          $(this).attr('coords',newCoords);//设置新的坐标值
-       });
 		});
 		
 		function addMenu(val){
@@ -200,12 +201,12 @@
 	
 </head>  
 <body> 
-	<div class="container">
+	<div class="container-fluid" style="margin:0;padding:0;">
 		<div class="row">
 			<div class="col-sm-12 text-center">
 				<img  src="./1071256544.jpg"  usemap="#859375" id="img1"/>
 				<map name="859375" id="Map">
-					<area style="outline:none;" target="_blank" shape="rect" coords="181,128,300,200" href="javascript:void(0)" onclick="addMenu(0)"  />
+					<area style="outline:none;" target="_blank" shape="rect" coords="170,120,285,185" href="javascript:void(0)" onclick="addMenu(0)"  />
 					<area style="outline:none;" target="_blank" shape="rect" coords="308,128,427,200" href="javascript:void(0)" onclick="addMenu(1)" />
 					<area style="outline:none;" target="_blank" shape="rect" coords="437,128,554,200" href="javascript:void(0)" onclick="addMenu(2)" />
 					
