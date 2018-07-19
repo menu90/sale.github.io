@@ -43,15 +43,18 @@
 	var price_arr = price.split('|');
 	var sale_name_arr = sale_name.split(',');
 	var sale_arr = sale_str.split('|');
-	var str;
+	var str;var totalNum=0; var totalPrice = 0;
 	for(var i=0 ;i<sale_arr.length;i++){
 		str +="<tr><td>" +sale_name_arr[i] +"</td>";
 		str +="<td>" +sale_arr[i] +"</td>";
 		str += "<td>" + parseInt(sale_arr[i])*parseInt(price_arr[i])+"</td></tr>";
 		//sale_arr[i] = parseInt(sale_arr[i]);
+		totalNum += parseInt(sale_arr[i]);
+		totalPrice += parseInt(sale_arr[i])*parseInt(price_arr[i]);
 	}
 //	str +="</tr>";
-	console.log(str);
+	str += "<tr><td>总计</td><td>"+totalNum+"</td><td>"+totalPrice+"</td></tr>";
+	//console.log(str);
 	$('#salesinfo').append(str);
 	
 	function clearCookies(){
