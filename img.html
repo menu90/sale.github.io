@@ -55,10 +55,7 @@
 	$('#salesinfo').append(str);
 	
 	function clearCookies(){
-		var date = new Date();  
-     		date.setTime(date.getTime() + (3 * 24 * 60 * 60 * 1000)); //三天后的这个时候过期  
-
-			$.cookie('sale_str', '0|0|0|0|0|0|0|0|0|0|0|0|0' , { expires: date }); 
+		$.cookie('slae_flag',  , { expires: -1 }); 
 	}
 	
 
