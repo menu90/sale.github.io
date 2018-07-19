@@ -32,6 +32,7 @@
 				
 				  </tbody>
 				</table>
+	<button type="button" class="btn btn-warning" onclick="clearCookies()">清空</button>
 	</div>
 	<script type="text/javascript">
 	
@@ -53,6 +54,12 @@
 	console.log(str);
 	$('#salesinfo').append(str);
 	
+	function clearCookies(){
+		var date = new Date();  
+     		date.setTime(date.getTime() + (3 * 24 * 60 * 60 * 1000)); //三天后的这个时候过期  
+
+			$.cookie('sale_str', '0|0|0|0|0|0|0|0|0|0|0|0|0' , { expires: date }); 
+	}
 	
 
 </script>
