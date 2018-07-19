@@ -47,17 +47,16 @@
 	<!--<script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>-->
     <script type="text/javascript"> 
 		$(function(){
-			if(!$.cookie('name_str')){
+			if(!$.cookie('slae_flag')){
 				
-				$.cookie('name_str', "城管追原味,来一腿鸡腿,食肉兽卤肉,无肉不欢卤肉+鸡腿,清凉一夏奥尔良鸡腿"+
-					",海之味吞拿鱼,鸡蛋,辣条,肉松,火腿");
-				$.cookie('sale_str', '0|0|0|0|0|0|0|0|0|0');
+				$.cookie('slae_flag', "1111");
+				$.cookie('sale_str', '0|0|0|0|0|0|0|0|0|0|0|0');
 			}
 			 $("#img1").load(function(){
 				var width = $("#img1").width();//获取当前图片宽度
-				var wbili = width / 566;//计算图片比例，750原图宽度
+				var wbili = width / 800;//计算图片比例，750原图宽度
 				var height = $("#img1").height();//获取图片高度
-				var hbili = height / 800;//计算高度比，5336原图高度
+				var hbili = height / 681;//计算高度比，5336原图高度
 				console.log(wbili + ":" + hbili + ":" + height +":" + width);
 				$("area").each(function (i) {//遍历area标签
 					var coords = $(this).attr('coords');//获取坐标值
@@ -67,6 +66,14 @@
 					var newCoords = newCoordsArr.join(',');//数组转字符串
 					$(this).attr('coords',newCoords);//设置新的坐标值
 				});
+				//document.getElementById("tableDiv").style.marginTop=-height;
+				var minH = height/4;
+				$("#tableDiv").css('margin-top',-(height-minH)); 
+				$("#tableDiv").css('height',height/2);
+				var minH = height/7;
+				$('#totalDiv').css('margin-top',-(height-6*minH));
+				//$("#totalDiv").css('height',height/4);
+				//$('#tableDiv').attr('margin-top', -height);
 			});
 			
 		});
@@ -85,33 +92,45 @@
 				  break;
 				case 2:
 				  name = "食肉兽卤肉";
-				  unit = 15;
+				  unit = 13;
 				  break;
 				case 3:
 				  name = "无肉不欢卤肉+鸡腿";
 				  unit = 15;
 				  break;
-				  case 4:
-				  name = "清凉一夏奥尔良鸡腿";
-				  unit = 15;
+				case 4:
+				  name = "清凉一夏奥尔良鸡排";
+				  unit = 16;
 				  break;
 				case 5:
-				  name = "海之味吞拿鱼";
-				  unit = 13;
+				  name = "一口酥香蒜蓉刀鱼";
+				  unit = 16;
 				  break;
 				case 6:
+				  name = "海之味吞拿鱼";
+				  unit = 18;
+				  break;
+				case 7:
+				  name = "鳗鱼漫步鳗鱼";
+				  unit = 22;
+				  break;
+				case 8:
+				  name = "土豪挚爱榴莲";
+				  unit = 22;
+				  break;
+				case 9:
 				  name = "鸡蛋";
 				  unit = 1;
 				  break;
-				  case 7:
+				case 10:
 				  name = "辣条";
 				  unit = 1;
 				  break;
-				case 8:
+				case 11:
 				  name = "肉松";
 				  unit = 3;
 				  break;
-				case 9:
+				case 12:
 				  name = "火腿";
 				  unit = 3;
 				  break;
@@ -119,20 +138,27 @@
 				  alert("新产品待研发，敬请期待！");
 				  return ;
 				}
-				var str = '<tr id="li_'+val+'" >'+
+				var idStr = "li_" + val;
+				if(document.getElementById(idStr)){
+					var  num = $('#num'+val).html();
+					$('#num'+val).html(parseInt(num) + 1);
+				} else {
+					var str = '<tr id="li_'+val+'" >'+
 							'<td style="width:80px;">'+name+
 							'</td><td style="width:70px;"><input type="button" class="btn btn-my btn-default"  onclick=addOrSub('+val+',0) value="-"/>'+
 							'<span id="num'+val+'" style="font-size:12px;font-weight:bold;">1</span>'+
 							'<span id="unit'+val+'" style="display:none">'+unit+'</span>'+
 							'<input type="button" class="btn btn-my btn-info" onclick=addOrSub('+val+',1) value="+"/>'+
 							'</td></tr>';
+					$("#addli").append(str);
+				}
+				
 					
 				var total = $("#total").text();//总数
 				var money = $("#money").text();//总价
 				total = parseInt(total) +1;
 				money = parseInt(money)+parseInt(unit);
-				$("#addli").append(str);
-				
+
 				$("#total").text(total);
 				$("#money").text(money);
 				
@@ -144,9 +170,7 @@
 		function sale(){
 			
 			var trObj = $('#addli').find('tr');
-			//console.log(trObj);
 			var sale_str = $.cookie('sale_str');
-			//sale_str = '0|0|0|0|0|0|0|0|0|0';
 			var sale_arr = sale_str.split('|');
 			trObj.each(function(){
 				var name = $(this).find('td').eq(0).html();
@@ -160,11 +184,9 @@
 				
 			});			   
 			sale_str = sale_arr.join("|");  
-			//sale_str = sale_str.substring(0, sale_str.length-1);    
 			
 			var date = new Date();  
      		date.setTime(date.getTime() + (3 * 24 * 60 * 60 * 1000)); //三天后的这个时候过期  
-			//$.cookie('cookieId',null,{expires:-1,path: '/'});
 
 			$.cookie('sale_str', sale_str , { expires: date });  
 			trObj.remove();
@@ -207,7 +229,28 @@
 	<div class="container-fluid" style="margin:0;padding:0;">
 		<div class="row">
 			<div class="col-sm-12 text-center">
-				<img  src="./1071256544.jpg"  usemap="#859375" id="img1"/>
+				<img src="https://menu90.github.io/sale.github.io/jianbing.jpg" usemap="#map1531970519" border="1px red solid" id="img1" />
+				<map id="map" name="map1531970519">
+					<area target="_blank" shape="rect" coords="252,175,370,247" href="javascript:void(0)" onclick="addMenu(0)"></area>
+					<area target="_blank" shape="rect" coords="387,175,507,247" href="javascript:void(0)" onclick="addMenu(1)"></area>
+					<area target="_blank" shape="rect" coords="522,175,640,247" href="javascript:void(0)" onclick="addMenu(2)" ></area>
+					<area target="_blank" shape="rect" coords="659,175,776,247" href="javascript:void(0)" onclick="addMenu(3)" ></area>
+					
+					<area target="_blank" shape="rect" coords="252,259,370,330" href="javascript:void(0)" onclick="addMenu(4)" ></area>
+					<area target="_blank" shape="rect" coords="387,259,507,330" href="javascript:void(0)" onclick="addMenu(5)" ></area>
+					<area target="_blank" shape="rect" coords="522,259,640,330" href="javascript:void(0)" onclick="addMenu(6)"></area>
+					<area target="_blank" shape="rect" coords="659,259,776,330" href="javascript:void(0)" onclick="addMenu(7)"></area>
+					
+					<area target="_blank" shape="rect" coords="252,343,370,413" href="javascript:void(0)" onclick="addMenu(8)"></area>
+					
+					<area target="_blank" shape="rect" coords="252,513,370,587" href="javascript:void(0)" onclick="addMenu(11)"></area>
+					<area target="_blank" shape="rect" coords="387,513,507,587" href="javascript:void(0)" onclick="addMenu(12)"></area>
+					<area target="_blank" shape="rect" coords="522,513,640,587" href="javascript:void(0)" onclick="addMenu(9)"></area>
+					<area target="_blank" shape="rect" coords="659,513,776,587" href="javascript:void(0)" onclick="addMenu(10)"></area>
+					
+					<area target="_blank" shape="rect" coords="12,616,84,662" href="./img.html"></area>
+					<area target="_blank" shape="rect" coords="144,617,221,659" href="javascript:void(0)" onclick="sale()" ></area>
+				<!--<img  src="./1071256544.jpg"  usemap="#859375" id="img1"/>
 				<map name="859375" id="Map">
 					<area style="outline:none;" target="_blank" shape="rect" coords="170,120,285,185" href="javascript:void(0)" onclick="addMenu(0)"  />
 					<area style="outline:none;" target="_blank" shape="rect" coords="308,128,427,200" href="javascript:void(0)" onclick="addMenu(1)" />
@@ -228,8 +271,8 @@
 					<area style="outline:none;" target="_blank" shape="rect" coords="0,755,60,785" href="./img.html"/>
 					<area style="outline:none;" target="_blank" shape="rect" coords="100,755,160,785" href="javascript:void(0)" onclick="sale()"  />
 
-				</map>
-				<div style="width:30%;height:700px;margin-top:-120%;" class="col-sm-5">
+				</map>-->
+				<div id="tableDiv" style="width:30%;height:700px;" class="col-sm-5">
 				
 					<table class="table text-left" id="addli">
 					
@@ -237,11 +280,11 @@
 					
 					
 				</div>
-				<div style="width:30%;margin-top:-13%;" class="col-sm-5">
+				<div id="totalDiv" style="width:30%;" class="col-sm-5" style="font-size:8em;">
 					<span class="text-left" style="width:70px;">共<span id="total">0</span>份</span>
 					<span class="text-right">合计￥<span id="money">0</span></span>
 						
-					</div>
+				</div>
 			</div>
 			
 		</div>
