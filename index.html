@@ -52,29 +52,7 @@
 				$.cookie('slae_flag', "1111");
 				$.cookie('sale_str', '0|0|0|0|0|0|0|0|0|0|0|0|0');
 			}
-			 $("#img1").load(function(){
-				var width = $("#img1").width();//获取当前图片宽度
-				var wbili = width / 800;//计算图片比例，750原图宽度
-				var height = $("#img1").height();//获取图片高度
-				var hbili = height / 681;//计算高度比，5336原图高度
-				console.log(wbili + ":" + hbili + ":" + height +":" + width);
-				$("area").each(function (i) {//遍历area标签
-					var coords = $(this).attr('coords');//获取坐标值
-					var coordsArr = coords.split(',');//切分为数组
-					var newCoordsArr = new Array(coordsArr[0] *wbili,coordsArr[1]*hbili,coordsArr[2]*wbili,coordsArr[3]*hbili);//计算新坐标值
-					console.log(newCoordsArr);
-					var newCoords = newCoordsArr.join(',');//数组转字符串
-					$(this).attr('coords',newCoords);//设置新的坐标值
-				});
-				//document.getElementById("tableDiv").style.marginTop=-height;
-				var minH = height/4;
-				$("#tableDiv").css('margin-top',-(height-minH)); 
-				$("#tableDiv").css('height',height/2);
-				var minH = height/7;
-				$('#totalDiv').css('margin-top',-(height-6*minH));
-				//$("#totalDiv").css('height',height/4);
-				//$('#tableDiv').attr('margin-top', -height);
-			});
+			 init();
 			
 		});
 		
@@ -218,6 +196,36 @@
 			$("#total").text(total);
 			$("#money").text(money);
 		}
+		function init(){
+			$("#img1").load(function(){
+				var width = $("#img1").width();//获取当前图片宽度
+				var wbili = width / 800;//计算图片比例，750原图宽度
+				var height = $("#img1").height();//获取图片高度
+				var hbili = height / 681;//计算高度比，5336原图高度
+			//	alert(height);
+				console.log(wbili + ":" + hbili + ":" + height +":" + width);
+				$("area").each(function (i) {//遍历area标签
+					var coords = $(this).attr('coords');//获取坐标值
+					var coordsArr = coords.split(',');//切分为数组
+					var newCoordsArr = new Array(coordsArr[0] *wbili,coordsArr[1]*hbili,coordsArr[2]*wbili,coordsArr[3]*hbili);//计算新坐标值
+					console.log(newCoordsArr);
+					var newCoords = newCoordsArr.join(',');//数组转字符串
+					$(this).attr('coords',newCoords);//设置新的坐标值
+				});
+				//document.getElementById("tableDiv").style.marginTop=-height;
+				var minH = height/4;
+				$("#tableDiv").css('margin-top',-(height-minH)); 
+				$("#tableDiv").css('height',height/2);
+				var minH = height/7;
+				$('#totalDiv').css('margin-top',-(height-6*minH));
+				//$("#totalDiv").css('height',height/4);
+				//$('#tableDiv').attr('margin-top', -height);
+			});
+		}
+		function rotate(){
+			alert(111);
+				init();
+		}
     </script>  
 	
 <style>
@@ -226,7 +234,7 @@
 </style>
 	
 </head>  
-<body> 
+<body onOrientationChang="rotate();"> 
 	<div class="container-fluid" style="margin:0;padding:0;">
 		<div class="row">
 			<div class="col-sm-12 text-center">
