@@ -50,7 +50,7 @@
 			if(!$.cookie('slae_flag')){
 				
 				$.cookie('slae_flag', "1111");
-				$.cookie('sale_str', '0|0|0|0|0|0|0|0|0|0|0|0|0');
+				$.cookie('sale_str', '0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0');
 			}
 			 init();
 			
@@ -106,11 +106,23 @@
 				  unit = 1;
 				  break;
 				case 11:
-				  name = "肉松";
-				  unit = 3;
+				  name = "海苔";
+				  unit = 2;
 				  break;
 				case 12:
 				  name = "火腿";
+				  unit = 3;
+				  break;
+				case 13:
+				  name = "肉松";
+				  unit = 3;
+				  break;
+				case 14:
+				  name = "培根";
+				  unit = 3;
+				  break;
+				case 15:
+				  name = "鸡柳";
 				  unit = 3;
 				  break;
 				default:
@@ -257,30 +269,13 @@
 					<area target="_blank" shape="rect" coords="522,513,640,587" href="javascript:void(0)" onclick="addMenu(11)"></area>
 					<area target="_blank" shape="rect" coords="659,513,776,587" href="javascript:void(0)" onclick="addMenu(12)"></area>
 					
+					<area target="_blank" shape="rect" coords="252,594,370,665" href="javascript:void(0)" onclick="addMenu(13)">
+					<area target="_blank" shape="rect" coords="387,594,507,665" href="javascript:void(0)" onclick="addMenu(14)">
+					<area target="_blank" shape="rect" coords="522,594,640,665" href="javascript:void(0)" onclick="addMenu(15)">
+					
 					<area target="_blank" shape="rect" coords="12,616,84,662" href="./img.html"></area>
 					<area target="_blank" shape="rect" coords="144,617,221,659" href="javascript:void(0)" onclick="sale()" ></area>
-				<!--<img  src="./1071256544.jpg"  usemap="#859375" id="img1"/>
-				<map name="859375" id="Map">
-					<area style="outline:none;" target="_blank" shape="rect" coords="170,120,285,185" href="javascript:void(0)" onclick="addMenu(0)"  />
-					<area style="outline:none;" target="_blank" shape="rect" coords="308,128,427,200" href="javascript:void(0)" onclick="addMenu(1)" />
-					<area style="outline:none;" target="_blank" shape="rect" coords="437,128,554,200" href="javascript:void(0)" onclick="addMenu(2)" />
-					
-					<area style="outline:none;" target="_blank" shape="rect" coords="181,220,300,292" href="javascript:void(0)" onclick="addMenu(3)" />
-					<area style="outline:none;" target="_blank" shape="rect" coords="308,220,427,292" href="javascript:void(0)" onclick="addMenu(4)"  />
-					<area style="outline:none;" target="_blank" shape="rect" coords="437,220,554,292" href="javascript:void(0)" onclick="addMenu(5)"  />
-					
-					<area style="outline:none;" target="_blank" shape="rect" coords="181,365,300,442" href="javascript:void(0)" onclick="addMenu(6)" />
-					<area style="outline:none;" target="_blank" shape="rect" coords="308,365,427,442" href="javascript:void(0)" onclick="addMenu(7)"  />
-					<area style="outline:none;" target="_blank" shape="rect" coords="437,365,554,442" href="javascript:void(0)" onclick="addMenu(8)"  />
-					
-					<area style="outline:none;" target="_blank" shape="rect" coords="181,460,300,532" href="javascript:void(0)" onclick="addMenu(9)"  />
-					<area style="outline:none;" target="_blank" shape="rect" coords="308,460,427,532" href="javascript:void(0)" onclick="addMenu(10)"  />
-					<area style="outline:none;" target="_blank" shape="rect" coords="437,460,554,532" href="javascript:void(0)" onclick="addMenu(10)"  />
-					
-					<area style="outline:none;" target="_blank" shape="rect" coords="0,755,60,785" href="./img.html"/>
-					<area style="outline:none;" target="_blank" shape="rect" coords="100,755,160,785" href="javascript:void(0)" onclick="sale()"  />
-
-				</map>-->
+				</map>
 				<div id="tableDiv" style="width:30%;height:700px;" class="col-sm-5">
 				
 					<table class="table text-left" id="addli">
